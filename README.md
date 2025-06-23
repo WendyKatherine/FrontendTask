@@ -1,54 +1,54 @@
-# React + TypeScript + Vite
+<h1>🎨 Task List App – Frontend</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  <p>
+    Esta SPA permite gestionar tareas en un tablero kanban con drag&nbsp;&amp;&nbsp;drop. Está construida en <strong>React + Vite</strong>, usa <strong>Tailwind CSS</strong> para el diseño y <strong>@hello‑pangea/dnd</strong> para la interacción.
+  </p>
 
-Currently, two official plugins are available:
+  <h2>✨ Características</h2>
+  <div class="feature">📌 Tablero kanban con columnas <em>Pending, In&nbsp;Progress, Completed</em>.</div>
+  <div class="feature">🔄 Drag &amp; drop para mover tareas (estado se actualiza en el backend).</div>
+  <div class="feature">➕ Crear tareas con formulario y subida de imagen (Cloudinary).</div>
+  <div class="feature">✏️ Editar en modal y ❌ eliminar con confirmación.</div>
+  <div class="feature">🖼️ Miniaturas de imagen en cada tarjeta.</div>
+  <div class="feature">⚡ Consumida vía API "Task List" desplegada en Render.</div>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  <h2>🏗️ Stack &amp; Librerías</h2>
+  <ul>
+    <li>React 18 + Vite</li>
+    <li>TypeScript</li>
+    <li>Tailwind CSS</li>
+    <li>@hello‑pangea/dnd (fork react‑beautiful‑dnd)</li>
+    <li>Lucide‑react (icons)</li>
+  </ul>
 
-## Expanding the ESLint configuration
+  <h2>🛠️ Instalación local</h2>
+  <ol>
+    <li>Clonar el repo y entrar:<br />
+      <code>git clone https://github.com/WendyKatherine/FrontendTask.git && cd FrontendTask</code></li>
+    <li>Instalar dependencias:<br /><code>npm install</code></li>
+    <li>Crear <code>.env</code> con la URL del backend:<br /><code>VITE_API_URL=https://backendtask-dr2m.onrender.com/api/task</code></li>
+    <li>Iniciar en modo dev:<br /><code>npm run dev</code></li>
+    <li>La app se abre en <code>http://localhost:5173</code></li>
+  </ol>
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+  <h2>🚀 Despliegue</h2>
+  <p>
+    Frontend desplegado en <strong>Vercel</strong>:
+    <br/>
+    <code>https://frontend-task-one-bay.vercel.app/</code>
+  </p>
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+  <h2>🔐 Variables de entorno</h2>
+  <ul>
+    <li><code>VITE_API_URL</code> – URL base del backend (Render).</li>
+  </ul>
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+  <h2>📜 Scripts disponibles</h2>
+  <ul>
+    <li><code>npm run dev</code> – modo desarrollo (Vite).</li>
+    <li><code>npm run build</code> – genera build de producción.</li>
+    <li><code>npm run preview</code> – previsualiza la build local.</li>
+  </ul>
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+  <h2>✍️ Autora</h2>
+  <p><strong>Wendy Katherine Villa</strong> – 2025 ©</p>
