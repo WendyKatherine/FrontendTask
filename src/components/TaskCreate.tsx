@@ -1,103 +1,108 @@
-import React, { useState } from "react";
-import { createTask, handleImageUpload, updateTask } from "../services/taskService";
+import { useState, type FormEvent } from "react";
+import { createTask, type TaskStatus } from "../services/taskService";
 
 interface TaskCreateProps {
+  boardId: string;
   onTaskCreated: () => void;
 }
 
-const TaskCreate: React.FC<TaskCreateProps> = ({ onTaskCreated }) => {
-    const [ title, setTitle ] = useState("");
-    const [ description, setDescription ] = useState("");
-    const [ dueDate, setDueDate] = useState("");
-    const [ image, setImage ] = useState<string | undefined>(undefined);
-    const [ created_by, setCreatedBy ] = useState("");
-    const [file, setFile] = useState<File | null>(null);
+const TaskCreate: React.FC<TaskCreateProps> = ({ boardId, onTaskCreated }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [dueDate, setDueDate] = useState("");
+  const [status] = useState<TaskStatus>("pending"); // siempre crea en "pending"
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-    const handleSaveTask = async (e: React.FormEvent) => {
-        e.preventDefault();
+  const handleSaveTask = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!title.trim()) return;
 
-        try {
-            const newTask = await createTask({
-                title,
-                description,
-                dueDate,
-                status: "pending",
-                created_by,
-            });
+    setIsSaving(true);
+    setError(null);
 
-            if (file) {
-                const imageUrl = await handleImageUpload(file, newTask._id);
-                if (imageUrl) {
-                    await updateTask(newTask._id, { image: imageUrl });
-                }
-            }
+    try {
+      await createTask({
+        title: title.trim(),
+        description: description.trim() || undefined,
+        dueDate: dueDate || undefined,
+        status,
+        created_by: "Wendy",
+        boardId,
+      });
 
-            setTitle("");
-            setDescription("");
-            setDueDate("");
-            setImage(undefined);
-            setCreatedBy("");
-            setFile(null);
+      // Limpiar form y refrescar lista
+      setTitle("");
+      setDescription("");
+      setDueDate("");
+      onTaskCreated();
+    } catch (err: any) {
+      console.error("❌ Error creating task:", err);
+      setError(err.message || "Error al crear tarea");
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
-            onTaskCreated();
-
-        } catch (error) {
-            console.error("❌ Error creating task:", error);
-        }
-    };
-
-    return (
-        <div className="bg-amber-200 rounded p-3 mb-2 shadow hover:shadow-md transition-shadow duration-200 mt-2">
-            <form onSubmit={handleSaveTask}>
-                <input
-                    type="text"
-                    placeholder="Title"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="rounded-md text-[#383129] p-1 text-sm w-full my-1"
-                    required
-                />
-                <textarea
-                    placeholder="Description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    className="rounded-md text-[#383129] p-1 text-sm w-full my-1"
-                />
-                <input 
-                    type="date"
-                    name="task-date"
-                    value={dueDate}
-                    onChange={(e) => setDueDate(e.target.value)}
-                    className="rounded-md text-[#383129] p-1 text-sm w-full my-1"
-                    required
-                />
-                <input
-                    type="file"
-                    accept="image/*"
-                    value={image}
-                    onChange={(e) => setFile(e.target.files?.[0] || null)}
-                    className="bg-white shadow-sm rounded-md text-[#383129] text-sm w-full p-1"
-                />
-                <input
-                    type="text"
-                    placeholder="Created by"
-                    value={created_by}
-                    onChange={(e) => setCreatedBy(e.target.value)}
-                    className="rounded-md text-[#383129]  p-1 text-sm w-full my-1 mb-2"
-                    required
-                />
-                <div className="flex flex-col justify-center items-center">
-                    <button
-                        type="submit"
-                        className="bg-white text-[#383129] px-4 py-1 rounded hover:bg-amber-50 transition text-center"
-                    >
-                        Save
-                    </button>
-                </div>
-                
-            </form>
+  return (
+    <form className="space-y-3" onSubmit={handleSaveTask}>
+      {error && (
+        <div className="alert alert-error py-1 text-xs">
+          <span>{error}</span>
         </div>
-    )
-}
+      )}
+
+      <div className="form-control">
+        <label className="label py-1">
+          <span className="label-text text-xs">Título</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Ej. Configurar autenticación"
+          className="input input-bordered input-sm w-full"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+      </div>
+
+      <div className="form-control">
+        <label className="label py-1">
+          <span className="label-text text-xs">Descripción</span>
+        </label>
+        <textarea
+          placeholder="Detalle opcional de la tarea"
+          className="textarea textarea-bordered textarea-xs w-full"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </div>
+
+      <div className="form-control">
+        <label className="label py-1">
+          <span className="label-text text-xs">Fecha límite</span>
+        </label>
+        <input
+          type="date"
+          className="input input-bordered input-sm w-full"
+          value={dueDate}
+          onChange={(e) => setDueDate(e.target.value)}
+        />
+      </div>
+
+      <button
+        type="submit"
+        className="btn btn-primary btn-sm w-full mt-2"
+        disabled={isSaving || !title.trim()}
+      >
+        {isSaving ? (
+          <span className="loading loading-spinner loading-xs" />
+        ) : (
+          "Guardar tarea"
+        )}
+      </button>
+    </form>
+  );
+};
 
 export default TaskCreate;

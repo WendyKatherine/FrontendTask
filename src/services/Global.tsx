@@ -1,5 +1,8 @@
-//Rutas de conexión
-export const Global = {
-    //url: "http://localhost:3900/api/task"
-    url: "https://backend-task-zeta-lovat.vercel.app/api/task"
-}
+const API_URL =
+  import.meta.env.VITE_API_URL ?? 'http://localhost:3900/api';
+
+const Global = {
+  url: API_URL,
+};
+
+export default Global;

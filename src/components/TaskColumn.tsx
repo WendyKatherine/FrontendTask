@@ -38,7 +38,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({ statusKey, tasks, title, onDele
         <Droppable droppableId={statusKey}>
         {(provided) => (
             <div
-                className="w-64 bg-white rounded p-4 shadow"
+                className="w-64 rounded p-4 shadow"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
             >
