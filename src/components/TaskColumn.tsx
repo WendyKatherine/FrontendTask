@@ -1,13 +1,14 @@
 // src/components/TaskColumn.tsx
 import React, { useState } from "react";
 import { Droppable, Draggable } from "@hello-pangea/dnd";
-import { deleteTask, type Task } from "../services/taskService";
+import { deleteTask, type Task, type TaskStatus } from "../services/taskService";
 import { Pencil, X } from "lucide-react";
 import TaskEditModal from "./TaskEditModal";
 import TaskCard from "./TaskCard";
 
+
 interface TaskColumnProps {
-    statusKey: "pending" | "inprogress" | "completed";
+    statusKey: TaskStatus;
     tasks: Task[];
     title: string;
     onDelete: () => void;

@@ -1,4 +1,3 @@
-// src/services/taskService.ts
 import Global from "./Global";
 
 export type TaskStatus = "pending" | "in-progress" | "completed";
@@ -11,7 +10,7 @@ export interface Task {
   status: TaskStatus;
   created_by?: string;
   image?: string;
-  board?: string; // id del tablero (ObjectId en backend)
+  board?: string;
 }
 
 // Asegúrate que VITE_API_URL = "http://localhost:3900/api"
