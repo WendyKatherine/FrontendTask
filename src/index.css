@@ -1,5 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import "tailwindcss";
+
+/* (Opcional, pero recomendado si quieres seguir usando tu tailwind.config.js) */
+/* @config "../tailwind.config.js"; */
+
+/* Plugin de daisyUI + temas */
+@plugin "daisyui" {
+  themes: dracula --default, dracula --prefersdark, cupcake, nord;
+  /* no tocamos root ni nada raro */
+}
+
+/* Fuentes personalizadas */
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+/* IMPORTANTE: no forces un background claro si quieres ver Dracula */
+body {
+  /* Deja que el tema ponga los colores */
+  min-height: 100vh;
+  font-family: "Lato", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Tus clases utilitarias de Lato siguen siendo válidas si las quieres usar: */
+
+.lato-thin {
+  font-family: "Lato", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
 
 body{
     background: #F7F7F7;

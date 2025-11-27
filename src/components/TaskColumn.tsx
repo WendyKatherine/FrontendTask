@@ -1,13 +1,14 @@
 // src/components/TaskColumn.tsx
 import React, { useState } from "react";
 import { Droppable, Draggable } from "@hello-pangea/dnd";
-import { deleteTask, type Task } from "../services/taskService";
+import { deleteTask, type Task, type TaskStatus } from "../services/taskService";
 import { Pencil, X } from "lucide-react";
 import TaskEditModal from "./TaskEditModal";
 import TaskCard from "./TaskCard";
 
+
 interface TaskColumnProps {
-    statusKey: "pending" | "inprogress" | "completed";
+    statusKey: TaskStatus;
     tasks: Task[];
     title: string;
     onDelete: () => void;
@@ -38,7 +39,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({ statusKey, tasks, title, onDele
         <Droppable droppableId={statusKey}>
         {(provided) => (
             <div
-                className="w-64 bg-white rounded p-4 shadow"
+                className="w-64 rounded p-4 shadow"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
             >
